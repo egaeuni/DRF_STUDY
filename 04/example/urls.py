@@ -2,6 +2,9 @@ from django.urls import path, include
 from .views import *
 from rest_framework import routers
 
+router = routers.SimpleRouter()
+router.register('books', BookViewSet)
+
 urlpatterns = [
     path("hello/", HelloAPI),
     path("fbv/books/", booksAPI),
@@ -14,7 +17,4 @@ urlpatterns = [
     path('generics/book/<int:bid>/', BookAPIGenerics.as_view()),
     ]
 
-router = routers.SimpleRouter()
-router.register('books', BookViewSet)
-
-urlpatterns = router.urls
+urlpatterns += router.urls
