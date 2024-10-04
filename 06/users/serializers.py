@@ -9,17 +9,18 @@ from .models import Profile
 # 회원 가입 시리얼라이저
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
+        help_text="이메일(Unique)",
         required = True,
         validators=[UniqueValidator(queryset=User.objects.all())] # 이메일 중복 검증
     )
     password = serializers.CharField(
+        help_text = "비밀번호",
         write_only = True,
         required = True,
         validators = [validate_password] # 비밀번호 검증
     )
 
-    password2 = serializers.CharField(write_only=True, required=True) #비밀번호 확인
-
+    password2 = serializers.CharField(write_only=True, required=True, help_text="비밀번호 재입력") #비밀번호 확인
     class Meta:
         model = User
         fields = ('username', 'password', 'password2', 'email')
